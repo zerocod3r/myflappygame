@@ -4,6 +4,7 @@ var mainstate = {
         // That's where we load the images and sounds 
 		
 		game.load.image('img','fb1.png');
+		game.load.image('pipe','pipe.png');
     },
 
     create: function() { 
@@ -24,6 +25,13 @@ var mainstate = {
 		
 		spkey.onDown.add(this.jump,this);
 		
+		this.pipes = game.add.group();
+		
+		this.timer = game.time.events.loop(2000,this.addRowOfPipes,this);
+		
+		this.score = 0;
+		
+		this.labelScore = game.add.text(20,20,"0" ,{font: "40px Consolas"; fill: "#fffff"});
     },
 
     update: function() {
@@ -32,6 +40,8 @@ var mainstate = {
 		
 		if(this.img.y < 0 || this.img.y > 490)
 			this.restartgame();
+		
+		game.physics.arcade.overlap(this.img,this.pipes,this.restartgame,null,this);
     },
 	
 	jump: function(){
@@ -40,9 +50,36 @@ var mainstate = {
 	
 	restartgame: function(){
 		game.state.start('main');
+	},
+	
+	addOnePipe: function(){
+		var pipe = game.add.sprite(x,y,'pipe');
+		
+		this.pipes.add(pipe);
+		
+		game.physics.arcade.enable(pipe);
+		
+		pipe.body.velocity.x = -200;
+		
+		pipe.checkWorldBounds = true;
+		
+		pipe.outOfBoundsKill = true;
 	}
 	
-};
+	addRowOfPipes: function(){
+		
+		var hole = Math.floor(Math.random()*5)+1;
+		
+		this.score+=1;
+		this.labelScore = this.score;
+		
+		for(var i=0;i<8;i++)
+			if(i!=hole && i!=hole+1)
+				this.addOnePipe(400,i*60+10);
+
+	}
+	
+}; 	
 
 var game = new Phaser.Game(400,490);
 
