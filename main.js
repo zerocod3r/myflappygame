@@ -42,10 +42,18 @@ var mainstate = {
 			this.restartgame();
 		
 		game.physics.arcade.overlap(this.img,this.pipes,this.restartgame,null,this);
+		if(this.img.angle < 20)
+			this.img.angle+=1;
     },
 	
 	jump: function(){
 		this.img.body.velocity.y = -350;
+		
+		var animation = game.add.tween(this.img);
+		animation.to({angle:-20},100);
+		animation.start();
+		
+		this.img.anchor.setTo(-0.2,0.5);
 	},
 	
 	restartgame: function(){
