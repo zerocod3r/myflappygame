@@ -21,7 +21,7 @@ var mainstate = {
 		
 		this.img.body.gravity.y = 1000;
 		
-		var spkey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+		var spkey = game.input.keyboard.addKey(Phaser.KeyBoard.SPACEBAR);
 		
 		spkey.onDown.add(this.jump,this);
 		
@@ -41,7 +41,8 @@ var mainstate = {
 		if(this.img.y < 0 || this.img.y > 490)
 			this.restartgame();
 		
-		game.physics.arcade.overlap(this.img,this.pipes,this.restartgame,null,this);
+		game.physics.arcade.overlap(this.img,this.pipes,this.hitpipe,null,this);
+		
 		if(this.img.angle < 20)
 			this.img.angle+=1;
     },
@@ -72,7 +73,7 @@ var mainstate = {
 		pipe.checkWorldBounds = true;
 		
 		pipe.outOfBoundsKill = true;
-	}
+	},
 	
 	addRowOfPipes: function(){
 		
@@ -85,6 +86,19 @@ var mainstate = {
 			if(i!=hole && i!=hole+1)
 				this.addOnePipe(400,i*60+10);
 
+	},
+	
+	hitpipe: function(){
+		if(this.img.alive == false)
+			return;
+		
+		this.img.alive = false;
+		
+		game.time.events.remove(this.timer);
+		
+		this.pipes.forEach(function(p){
+			p.body.velocity.x = 0;
+		},this);
 	}
 	
 }; 	
