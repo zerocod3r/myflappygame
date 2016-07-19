@@ -3,7 +3,7 @@ var mainstate = {
         // This function will be executed at the beginning     
         // That's where we load the images and sounds 
 		
-		game.load.image('img','fb1.png');
+		game.load.image('img','img.gif');
 		game.load.image('pipe','pipe.png');
     },
 
@@ -21,7 +21,7 @@ var mainstate = {
 		
 		this.img.body.gravity.y = 1000;
 		
-		var spkey = game.input.keyboard.addKey(Phaser.KeyBoard.SPACEBAR);
+		var spkey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 		
 		spkey.onDown.add(this.jump,this);
 		
@@ -31,7 +31,7 @@ var mainstate = {
 		
 		this.score = 0;
 		
-		this.labelScore = game.add.text(20,20,"0" ,{font: "40px Consolas"; fill: "#fffff"});
+		this.labelScore = game.add.text(20,20,"0" ,{font: "40px Consolas", fill: "#fffff"});
     },
 
     update: function() {
@@ -48,7 +48,7 @@ var mainstate = {
     },
 	
 	jump: function(){
-		if (this.bird.alive == false)
+		if (this.img.alive == false)
 			return;
 		
 		this.img.body.velocity.y = -350;
