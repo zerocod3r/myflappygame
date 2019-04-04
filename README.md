@@ -1,9 +1,9 @@
-MyFlappyGame
+# MyFlappyGame
 
 Game similar to flappy bird.
 Personal project build on JavaScript and Phaser . 
 
-Play it here https://zerocod3r.github.io/myflappygame/flappygame.html
+## Play it here https://zerocod3r.github.io/myflappygame/flappygame.html
 
 * Only runs with online server 
 * localhost server can also be used to run it.
